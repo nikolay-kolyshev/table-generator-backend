@@ -9,7 +9,9 @@ describe('TableContainersController', () => {
       controllers: [TableContainersController],
     }).compile();
 
-    controller = module.get<TableContainersController>(TableContainersController);
+    controller = module.get<TableContainersController>(
+      TableContainersController,
+    );
   });
 
   it('should be defined', () => {

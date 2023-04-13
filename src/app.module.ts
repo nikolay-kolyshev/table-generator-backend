@@ -5,6 +5,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CitiesModule } from './cities/cities.module';
 import configuration from '../config/configuration';
+import { AuthModule } from '@/auth/auth.module';
+import { LoggerModule } from '@/common/logger/logger.module';
+import { TableRowsModule } from './table-rows/table-rows.module';
 
 @Module({
   imports: [
@@ -25,9 +28,12 @@ import configuration from '../config/configuration';
       }),
       inject: [ConfigService],
     }),
+    LoggerModule,
+    AuthModule,
     TableContainersModule,
     TablesModule,
     CitiesModule,
+    TableRowsModule,
   ],
 })
 export class AppModule {}

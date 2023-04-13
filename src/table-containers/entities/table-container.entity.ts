@@ -1,6 +1,6 @@
 import { Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
-import { AbstractEntity } from '../../common/entities/abstract.entity';
-import { TableEntity } from '../../tables/entities/table.entity';
+import { AbstractEntity } from '@/common/entities/abstract.entity';
+import { TableEntity } from '@/tables/entities/table.entity';
 
 @Entity('tableContainer')
 export class TableContainerEntity extends AbstractEntity {
