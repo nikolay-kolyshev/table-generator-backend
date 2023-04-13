@@ -17,9 +17,7 @@ class CreateTableContainerCommandHandler
     command: CreateTableContainerCommand,
   ): Promise<TableContainerEntity> {
     try {
-      return await this.tableContainersCommandRepository.create(
-        command.mainTable,
-      );
+      return await this.tableContainersCommandRepository.create();
     } catch (err) {
       throw new InternalServerErrorException(
         'Внутренняя серверная ошибка при создании контейнера таблиц',

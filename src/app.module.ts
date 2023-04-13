@@ -34,6 +34,7 @@ import { TableRowsModule } from './table-rows/table-rows.module';
     TablesModule,
     CitiesModule,
     TableRowsModule,
+    TablesModule,
   ],
 })
 export class AppModule {}

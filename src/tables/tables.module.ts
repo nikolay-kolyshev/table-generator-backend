@@ -26,5 +26,6 @@ import { TableEntity } from '@/tables/entities/table.entity';
       TableCommandHandlers,
     ]),
   ],
+  exports: [TablesCommandRepository],
 })
 export class TablesModule {}

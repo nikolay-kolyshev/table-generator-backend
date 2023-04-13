@@ -1,7 +1,7 @@
 import { TableRowEntity } from '@/table-rows/entities/table-row.entity';
 
 export class CreateTableCommandDto {
-  readonly containerId: boolean;
+  readonly containerId: number;
 
   readonly isMain?: boolean;
 

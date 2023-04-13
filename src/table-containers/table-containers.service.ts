@@ -6,6 +6,11 @@ import {
   GetAllTableContainersPreviewQuery,
   GetTableContainerByIdQuery,
 } from '@/table-containers/query-bus/table-containers.queries';
+import {
+  CreateTableContainerCommand,
+  DeleteTableContainerByIdCommand,
+} from '@/table-containers/command-bus/table-containers.commands';
+import { TablesService } from '@/tables/tables.service';
 
 @Injectable()
 export class TableContainersService {
@@ -22,7 +27,13 @@ export class TableContainersService {
     return await this.queryBus.execute(new GetTableContainerByIdQuery(id));
   }
 
-  async createTableContainer() {}
+  async createTableContainer() {
+    return await this.commandBus.execute(new CreateTableContainerCommand());
+  }
 
-  async deleteTableContainerById(id: number) {}
+  async deleteTableContainerById(id: number) {
+    return await this.commandBus.execute(
+      new DeleteTableContainerByIdCommand(id),
+    );
+  }
 }

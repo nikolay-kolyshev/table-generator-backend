@@ -8,11 +8,13 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { TablesService } from '@/tables/tables.service';
 import { CreateTableDto } from '@/tables/dto/create-table.dto';
+import { TABLES_API_TAG } from '@/tables/tables.constants';
 
-@Controller('tables')
+@ApiTags(TABLES_API_TAG)
+@Controller(TABLES_API_TAG)
 export class TablesController {
   constructor(private tableService: TablesService) {}
 

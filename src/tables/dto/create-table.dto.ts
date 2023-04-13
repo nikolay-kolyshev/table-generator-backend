@@ -3,7 +3,7 @@ import { IsArray } from 'class-validator';
 
 export class CreateTableDto {
   @ApiProperty({ name: 'containerId' })
-  readonly containerId: boolean;
+  readonly containerId: number;
 
   @ApiPropertyOptional({ name: 'isMain' })
   readonly isMain?: boolean;

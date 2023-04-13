@@ -11,9 +11,14 @@ import { TableContainersCommands } from '@/table-containers/command-bus/table-co
 import { TableContainersCommandHandlers } from '@/table-containers/command-bus/table-containers.command-handlers';
 import { TableContainersQueryRepository } from '@/table-containers/repositories/table-containers.query-repository';
 import { TableContainersCommandRepository } from '@/table-containers/repositories/table-containers.command-repository';
+import { TablesModule } from '@/tables/tables.module';
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule.forFeature([TableContainerEntity])],
+  imports: [
+    CqrsModule,
+    TypeOrmModule.forFeature([TableContainerEntity]),
+    TablesModule,
+  ],
   controllers: [TableContainersController],
   providers: [
     TableContainersService,
