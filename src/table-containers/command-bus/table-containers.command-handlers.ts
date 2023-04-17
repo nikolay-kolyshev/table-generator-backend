@@ -1,6 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InternalServerErrorException } from '@nestjs/common';
-import { CreateTableContainerCommand } from '@/table-containers/command-bus/table-containers.commands';
+import {
+  CopyTableCommand,
+  CreateTableContainerCommand,
+  DeleteTableContainerByIdCommand,
+} from '@/table-containers/command-bus/table-containers.commands';
 import { TableContainersCommandRepository } from '@/table-containers/repositories/table-containers.command-repository';
 import { TableContainerEntity } from '@/table-containers/entities/table-container.entity';
 import { DeleteTableByIdCommand } from '@/tables/command-bus/table.commands';
@@ -26,7 +30,28 @@ class CreateTableContainerCommandHandler
   }
 }
 
-@CommandHandler(DeleteTableByIdCommand)
+@CommandHandler(CopyTableCommand)
+class CopyTableCommandHandler
+  implements ICommandHandler<CopyTableCommand, TableContainerEntity>
+{
+  constructor(
+    private readonly tableContainersCommandRepository: TableContainersCommandRepository,
+  ) {}
+
+  public async execute(
+    command: CopyTableCommand,
+  ): Promise<TableContainerEntity> {
+    try {
+      return await this.tableContainersCommandRepository.copyTable(command.dto);
+    } catch (err) {
+      throw new InternalServerErrorException(
+        'Внутренняя серверная ошибка при копировании таблицы',
+      );
+    }
+  }
+}
+
+@CommandHandler(DeleteTableContainerByIdCommand)
 class DeleteTableContainerCommandHandler
   implements ICommandHandler<DeleteTableByIdCommand, void>
 {
@@ -47,5 +72,6 @@ class DeleteTableContainerCommandHandler
 
 export const TableContainersCommandHandlers = {
   CreateTableContainerCommandHandler,
+  CopyTableCommandHandler,
   DeleteTableContainerCommandHandler,
 };

@@ -7,12 +7,21 @@ import {
   DocumentBuilder,
   SwaggerDocumentOptions,
 } from '@nestjs/swagger';
-import { SwaggerCustomOptions } from '@nestjs/swagger/dist/interfaces';
 import { JWT_REFRESH_TOKEN_COOKIE_KEY } from '@/auth/auth.constants';
+import { LoggerService } from '@/common/logger/logger.service';
+
+const LOGGER_CONTEXT = 'app';
 
 async function bootstrap() {
+  /** [app] init */
   const app = await NestFactory.create(AppModule);
+  /** [logger] init */
+  const logger = await app.resolve(LoggerService);
+  /** [logger] set global context */
+  logger.globalContext = LOGGER_CONTEXT;
+  /** [app] cookie parser init */
   app.use(cookieParser());
+  /** [swagger] DocumentBuilder configuration */
   const config = new DocumentBuilder()
     .setTitle('Генератор таблиц')
     .setDescription('API для генератора таблиц')
@@ -35,14 +44,20 @@ async function bootstrap() {
         'Refresh JWT token подставляется сервером в HttpOnly Cookie и отправляется с каждым запросом фронта (тоже спорный момент с точки зрения безопасности, иногда используют подход "ровно наоборот") и экспайрится долго, после экспайра клиенту возвращается Unauthorized Http Status Code (401)',
     })
     .build();
+  /** [swagger] DocumentOptions configuration */
   const documentOptions: SwaggerDocumentOptions = {
     operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
   };
+  /** [swagger] SwaggerModule document init */
   const document = SwaggerModule.createDocument(app, config, documentOptions);
+  /** [swagger] SwaggerModule setup */
   SwaggerModule.setup('docs', app, document);
+  /** [config] get port */
   const PORT = +app.get(ConfigService).get('http.port') || 5000;
-  await app.listen(PORT, () => {
-    console.log('Service listening on PORT =', PORT);
+  /** [app] listening service */
+  await app.listen(PORT, async () => {
+    logger.success(`Service listening on PORT = ${PORT}`);
+    logger.log(`Environment = ${process.env.NODE_ENV}`);
   });
 }
 bootstrap();

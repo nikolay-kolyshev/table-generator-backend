@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -6,12 +7,14 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { TABLE_CONTAINERS_API_TAG } from '@/table-containers/table-containers.constants';
 import { TableContainersService } from '@/table-containers/table-containers.service';
 import { TableContainerView } from '@/table-containers/views/table-container.view';
 import { TableContainerEntity } from '@/table-containers/entities/table-container.entity';
+import { CopyTableDto } from '@/table-containers/dto/copy-table.dto';
 
 @ApiTags(TABLE_CONTAINERS_API_TAG)
 @Controller(TABLE_CONTAINERS_API_TAG)
@@ -40,6 +43,16 @@ export class TableContainersController {
   @Post('/create')
   createTableContainer() {
     return this.tableContainersService.createTableContainer();
+  }
+
+  @ApiOperation({
+    summary:
+      'Копировать таблицу по id и добавить ее в список побочных таблиц контейнера',
+  })
+  @HttpCode(HttpStatus.CREATED)
+  @Put('/copy-table')
+  copyTable(@Body() dto: CopyTableDto) {
+    return this.tableContainersService.copyTable(dto);
   }
 
   @ApiOperation({ summary: 'Удалить контейнер таблиц по id' })

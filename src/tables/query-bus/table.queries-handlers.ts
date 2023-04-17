@@ -70,6 +70,6 @@ class GetTableByIdQueryHandler
 
 export const TableQueriesHandlers = {
   GetAllSideTablesByTableContainerIdQueryHandler,
-  GetMainTableByTableContainerIdQuery,
+  GetMainTableByTableContainerIdQueryHandler,
   GetTableByIdQueryHandler,
 };

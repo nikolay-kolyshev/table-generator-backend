@@ -18,9 +18,11 @@ import { TABLES_API_TAG } from '@/tables/tables.constants';
 export class TablesController {
   constructor(private tableService: TablesService) {}
 
-  @ApiOperation({ summary: 'Получить все побочные таблицы по id таблицы' })
+  @ApiOperation({
+    summary: 'Получить все побочные таблицы по id контейнера таблиц',
+  })
   @HttpCode(HttpStatus.OK)
-  @Get('/side-tables-by-table/:tableId')
+  @Get('/side-tables-by-table-container/:tableContainerId')
   getAllSideTablesByTableContainerId(
     @Param('tableContainerId') tableContainerId: number,
   ) {
@@ -29,9 +31,9 @@ export class TablesController {
     );
   }
 
-  @ApiOperation({ summary: 'Получить главную таблицу по id таблицы' })
+  @ApiOperation({ summary: 'Получить главную таблицу по id контейнера таблиц' })
   @HttpCode(HttpStatus.OK)
-  @Get('/main-table-by-table/:tableId')
+  @Get('/main-table-by-table-container/:tableContainerId')
   getMainTableByTableContainerId(
     @Param('tableContainerId') tableContainerId: number,
   ) {
