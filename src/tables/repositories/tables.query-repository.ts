@@ -14,7 +14,8 @@ export class TablesQueryRepository {
     tableContainerId: number,
   ): Promise<TableEntity[]> {
     return await this.tablesRepository.find({
-      where: { container: { id: tableContainerId }, isMain: false },
+      where: { sideContainer: { id: tableContainerId }, isMain: false },
+      relations: ['rows'],
     });
   }
 
@@ -22,11 +23,15 @@ export class TablesQueryRepository {
     tableContainerId: number,
   ): Promise<TableEntity> {
     return await this.tablesRepository.findOne({
-      where: { container: { id: tableContainerId }, isMain: true },
+      where: { sideContainer: { id: tableContainerId }, isMain: true },
+      relations: ['rows'],
     });
   }
 
   async findById(id: number): Promise<TableEntity> {
-    return await this.tablesRepository.findOne({ where: { id } });
+    return await this.tablesRepository.findOne({
+      where: { id },
+      relations: ['rows'],
+    });
   }
 }

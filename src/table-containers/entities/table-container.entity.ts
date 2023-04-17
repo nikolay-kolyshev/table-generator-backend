@@ -4,10 +4,10 @@ import { TableEntity } from '@/tables/entities/table.entity';
 
 @Entity('tableContainer')
 export class TableContainerEntity extends AbstractEntity {
-  @OneToOne(() => TableEntity)
   @JoinColumn()
+  @OneToOne(() => TableEntity, (table: TableEntity) => table.mainContainer)
   mainTable: TableEntity;
 
-  @OneToMany(() => TableEntity, (table: TableEntity) => table.container)
+  @OneToMany(() => TableEntity, (table: TableEntity) => table.sideContainer)
   sideTables: TableEntity[];
 }

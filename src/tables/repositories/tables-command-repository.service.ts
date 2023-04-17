@@ -11,6 +11,10 @@ export class TablesCommandRepository {
     private tablesRepository: Repository<TableEntity>,
   ) {}
 
+  async findById(id: number): Promise<TableEntity> {
+    return this.tablesRepository.findOneBy({ id });
+  }
+
   async create(dto: CreateTableCommandDto) {
     const table = await this.tablesRepository.create(dto);
     if (dto.isMain) {

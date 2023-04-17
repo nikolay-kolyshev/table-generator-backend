@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 import { AbstractEntity } from '@/common/entities/abstract.entity';
 import { TableRowEntity } from '@/table-rows/entities/table-row.entity';
 import { Exclude } from 'class-transformer';
@@ -15,9 +15,16 @@ export class TableEntity extends AbstractEntity {
   rows: TableRowEntity[];
 
   @Exclude()
+  @OneToOne(
+    () => TableContainerEntity,
+    (tableContainer) => tableContainer.mainTable,
+  )
+  mainContainer: TableContainerEntity;
+
+  @Exclude()
   @ManyToOne(
     () => TableContainerEntity,
     (tableContainer) => tableContainer.sideTables,
   )
-  container: TableContainerEntity;
+  sideContainer: TableContainerEntity;
 }

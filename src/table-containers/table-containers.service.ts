@@ -11,6 +11,7 @@ import {
   DeleteTableContainerByIdCommand,
 } from '@/table-containers/command-bus/table-containers.commands';
 import { TablesService } from '@/tables/tables.service';
+import { CopyTableDto } from '@/table-containers/dto/copy-table.dto';
 
 @Injectable()
 export class TableContainersService {
@@ -28,6 +29,10 @@ export class TableContainersService {
   }
 
   async createTableContainer() {
+    return await this.commandBus.execute(new CreateTableContainerCommand());
+  }
+
+  async copyTable(dto: CopyTableDto) {
     return await this.commandBus.execute(new CreateTableContainerCommand());
   }
 

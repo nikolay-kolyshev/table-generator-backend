@@ -12,7 +12,9 @@ export class TableContainersQueryRepository {
   ) {}
 
   async getAllPreview(): Promise<TableContainerView[]> {
-    const tableContainers = await this.tableContainersRepository.find();
+    const tableContainers = await this.tableContainersRepository.find({
+      relations: ['mainTable', 'sideTables'],
+    });
     if (tableContainers.length) {
       return tableContainers.map(
         (tableContainer) => new TableContainerView(tableContainer),
@@ -22,6 +24,9 @@ export class TableContainersQueryRepository {
   }
 
   async getById(id: number): Promise<TableContainerEntity> {
-    return await this.tableContainersRepository.findOneBy({ id });
+    return await this.tableContainersRepository.findOne({
+      where: { id },
+      relations: ['mainTable', 'sideTables'],
+    });
   }
 }
